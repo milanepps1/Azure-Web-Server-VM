@@ -34,7 +34,7 @@ The purpose of this project is to example the process of using Microsoft Azure t
 
 The image below illustrates the desired architecture of this entire setup.
 
-
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/1.png">
 
 Starting from the bottom left of the image, you can see that we are creating a VM (virtual machine) that has a NIC (network interface controller) that is connected to the subnet of our VNET (virtual network). The subnet is protected by the filtering rules of our NSG (network security group). The VNET is connected to Azure Bastion, which holds a different subnetwork. Bastion is an Azure service that allows us to connect to our VM without exposing public SSH (secure shell) ports.  
 The steps to successfully create a web server in Azure and deploy a virtual machine to it are as follows:
@@ -47,15 +47,16 @@ Create an Ubuntu Server Virtual Machine
 Install Nextcloud by connecting via SSH using Bastion
 Publish an IP
 Create a DNS label
-Creating a Resource Group
 
+Creating a Resource Group
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/2.png">
 To create a resource group, you can click the Create a Resource button and then, in the search box, type “resource group.” You will see an option for a resource group pop up. Click it and then, when you see the resource group box appear with the Create button, click Create.
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/1.png">
+
 You will then have the ability to name your resource group and adjust any necessary details. The name doesn’t matter. Just choose a name you can easily remember and distinguish from others if you decide to create more later. For my group, I chose RG-USEast-Nextcloud since I am creating a Resource Group that is in the US East region and it will be creating a Nextcloud server.
 
 
 At the bottom-left of the screen, you should see the button “Review + Create.” Click that button, then click the Create button that follows.
-If you click on the notification icon at the top right, you will see the confirmation that your resource group was successfully created. If you click the “Go to resource group button” (as shown in the image below, you will be taken to your resource group.
+If you click on the notification icon at the top right, you will see the confirmation that your resource group was successfully created. If you click the “Go to resource group button,” you will be taken to your resource group.
 
 
 Creating a Virtual Network and a Subnet
@@ -64,30 +65,42 @@ The process is very similar to how the resource group was just created. Click Cr
 
 You’ll notice that the resource group you just created is already pre-populated as the name of the resource group that will be tied to your new virtual network. You only need to name the virtual network to your liking. The steps up until here will be very similar to how you just created your resource group, except you will need to also create your subnet before clicking the “Review + Create” button. To set up your subnet, you will first need to click on the IP addresses option. 
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/3.png">
 
 You should find that there is already a designated network and subnet. But we don’t want to use that. We want to delete the default subnet and add our own IP address and subnet. 
 
-In this example, I’m using 172.10.0.0/16 as the IPv4 address. From there, a subnet is added
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/4.png">
 
+In this example, I’m using 172.10.0.0/16 as the IPv4 address. From there, a subnet is added.
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/5.png">
 
 Using a similar naming convention, I chose SNET-USEast-Nextcloud. The range for this would be 172.10.0.0/24, but this information might already be pre-filled as soon as you click the Add a subnet button. From there, you can click Add at the bottom left of the page to add the subnet.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/6.png">
+
 Once you’ve added the subnet, you can review what you have to make sure everything looks right and then click the review + Create button at the bottom of the page.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/7.png">
 
 Once you click Create and the deployment has been completed, you will see a new notification that confirms the deployment was successful.
 
 You can click on Go to resource if there is something else that you would like to configure on it ( like DDoS protection or firewall settings). If instead, you want to confirm that the deployment is showing up in the right place, click on the resource group itself (in notifications, you should also see a Go to resource group button right under the Go to resource button. Use that to navigate back to your resource group).
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/8.png">
+
 If you see it, you can move on to the actual resource itself by clicking on the virtual network (VNET) you just created or clicking on Go to resource in the notifications section. From there, on the far right, there is a Monitoring tab that you can click to open up a dropdown list. At the bottom of the list is the Diagram option. If you click this, it will display the topology of what you have created so far. You can use this along the way to track how much of the entire virtual setup you have completed.
 
 Creating a Network Security Group
-Next we want to a create a network security group to ensure that our network is protected by filtering inbound and outbound traffic to and from Azure resources and the internet.
+Next we want to create a network security group to ensure that our network is protected by filtering inbound and outbound traffic to and from Azure resources and the internet.
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/9.png">
 
 The process is just like before. Once you create a new resource and type in “network security group” and select that option, you can create a network security group and name it with the same naming convention (seeing a trend here?). You will see that it is automatically connected to your resource group instance just like the virtual network was. After naming it, click Review + Create and then click Create. Like before, you will see a notification that confirms when the deployment is complete.
 
 If you click the Go to resource button, you can view and edit the details of your network security group.As you can see in the image below, Azure has already provided some default rules for our inbound and outbound filtering. By default, all ports and protocols are open inbound and outbound inside the virtual network. It can receive data from the Azure Load Balancer and send data to the internet. Everything else is denied by default. So, nothing can enter the virtual network by default.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/10.png">
 
 From here, we want to assign the network security group to our subnet. Click the resource group to navigate back to it, where you will find all of the assets you’ve created so far (subnet and network security group) listed under the resource group.
 
