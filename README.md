@@ -49,7 +49,9 @@ Publish an IP
 Create a DNS label
 
 Creating a Resource Group
+
 <img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/2.png">
+
 To create a resource group, you can click the Create a Resource button and then, in the search box, type “resource group.” You will see an option for a resource group pop up. Click it and then, when you see the resource group box appear with the Create button, click Create.
 
 You will then have the ability to name your resource group and adjust any necessary details. The name doesn’t matter. Just choose a name you can easily remember and distinguish from others if you decide to create more later. For my group, I chose RG-USEast-Nextcloud since I am creating a Resource Group that is in the US East region and it will be creating a Nextcloud server.
