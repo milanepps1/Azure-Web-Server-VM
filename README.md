@@ -29,7 +29,7 @@ This Azure project involves creating a VM (virtual machine) that has a NIC (netw
 
 The image below illustrates the desired architecture of this entire setup.
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/1.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/images/1.png">
 
 Starting from the bottom left of the image, you can see that we are creating a VM (virtual machine) that has a NIC (network interface controller) that is connected to the subnet of our VNET (virtual network). The subnet is protected by the filtering rules of our NSG (network security group). The VNET is connected to Azure Bastion, which holds a different subnetwork. Bastion is an Azure service that allows us to connect to our VM without exposing public SSH (secure shell) ports.  
 The steps to successfully create a web server in Azure and deploy a virtual machine to it are as follows:
