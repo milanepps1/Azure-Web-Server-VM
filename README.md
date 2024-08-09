@@ -7,30 +7,25 @@ This Azure project involves creating a VM (virtual machine) that has a NIC (netw
 
 
 ### Skills Learned
-[Bullet Points - Remove this afterwards]
 
-- Advanced understanding of SIEM concepts and practical application.
-- Proficiency in analyzing and interpreting network logs.
-- Ability to generate and recognize attack signatures and patterns.
-- Enhanced knowledge of network protocols and security vulnerabilities.
-- Development of critical thinking and problem-solving skills in cybersecurity.
+- Creating a Resource Group
+- Creating a Virtual Network and a subnet within the Resource Group
+- Securing a subnet using a Network Security Group
+- Deploying Bastion to connect to a Virtual Machine
+- Deploying and configured Nextcloud on an Ubuntu VM in an Azure environment.
+- Utilizing Bash scripting and Linux command-line tools to manage system updates, software installations, and security configurations.
+- Publishing an IP
+- Creating a DNS label for the IP
+- Ensuring system integrity and secure access to cloud-based resources.
+
 
 ### Tools Used
-[Bullet Points - Remove this afterwards]
 
-- Security Information and Event Management (SIEM) system for log ingestion and analysis.
-- Network analysis tools (such as Wireshark) for capturing and examining network traffic.
-- Telemetry generation tools to create realistic network traffic and attack scenarios.
+- Microsoft Azure
+- Ubuntu
+- Bash
 
 ## Steps
-drag & drop screenshots here or use imgur and reference them using imgsrc
-
-Every screenshot should have some text explaining what the screenshot is about.
-
-Example below.
-
-*Ref 1: Network Diagram*
-The purpose of this project is to example the process of using Microsoft Azure to create a virtual machine and to deploy said virtual machine to a web server.
 
 The image below illustrates the desired architecture of this entire setup.
 
