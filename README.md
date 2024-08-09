@@ -208,20 +208,20 @@ The next step is to access our Nextcloud instance on the web. In order to see ou
 
 From there, we should navigate to IP configuration, where we will see our current setup for a private IP address, but no public IP (which we now will create).
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/28.png">
-
 Now, click on your IP config (mine is named ipconfig1) and it will pull up the option to edit it. From here, we need to check the Associate public IP address box, click the Create a public IP address option, name our new public IP, and make sure it’s set to standard before clicking OK and then Save.
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/29.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/28.png">
 
 Once Azure has created our new public IP address and associated it with our Network Interface Controller (NIC), you can check the update by clicking into your VM and then clicking Overview in the left panel. You should see a public IP address has been added right above the private IP.
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/30.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/29.png">
 
 Generally, it would be possible to copy the public IP and navigate to it by typing:
 https://172.191.142.65 (the IP address would be whatever your public IP is on that page). However, it won’t work at this point because we didn’t add a rule to allow inbound https traffic in our network security group. To resolve this, we will need to allow inbound traffic to our Nextcloud server, but only if it’s coming from our current IP.
 
 One way to find the current public IP is by navigating to www.whatsmyip.com , but if that doesn’t provide anything (shown as a Not Detected message) you may need to login to your router (using the IP address on the back of your router/modem) to view the Broadband tab’s info that includes your router’s IPv4 address.
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/30.png">
 
 Next you want to copy your IPv4 address and add it as an inbound rule in your network settings. From here, click Networking > Network settings (in the left panel of your Azure portal) and then click Create port rule > Inbound port rule.
 
@@ -229,35 +229,48 @@ Next you want to copy your IPv4 address and add it as an inbound rule in your ne
 
 The fields that are marked should be filled out as exemplified in the image below. The main fields to note are the Source IP addresses being your copied public IPv4 address, the Destination IP being the private IP for your VM, the service being HTTPS, and preferably (optional) changing the name to be something you can easily identify. Once you have everything entered, click Add. In a few seconds, that Allow rule will be added to your list of inbound port rules.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/32.png">
 
 Now that the rule has been created, copy the VM’s public IP address and try navigating to it again:
 https://172.191.142.65
 
 Because the certificate created earlier was a self-signed certificate, your browser will likely flag it as not being safe, and you will need to click the Advanced button that appears and click forward to accept the risk. Once you do, you will be taken to the untrusted domain you created (which was the risk).
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/33.png">
 
 Creating a DNS Label
 
 
 Our final step is creating a DNS label. We can start by taking one more look at our topology to see what we have so far and make sure that we’re on the right track.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/34.png">
+
 We’ll need to click into our public IP and edit the configuration first. If you navigate to your resource group, you should see a list of all of the resources you’ve created thus far. We’ll want to click into the Virtual Machine IP which is the resource that holds the public IP.
-  
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/35.png">
+
 After clicking into your VMIP, click into Settings > Configuration. You will now be able to edit your configuration. 
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/36.png">
 
 This is where we will create a DNS label. To do this, you only need to name the label (needs to be a unique name) and click the Save button at the top.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/37.png">
 
 Once that is done, click Overview in the left panel. Then, click into your resource group again and then click into your virtual machine.
 
-
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/38.png">
 
 Looking at the details on the far right or under networking, we can see that we now have the public IP address and the DNS name associated with this virtual machine.
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/39.png">
 
 Our next step is to open our virtual machine to make sure Nextcloud is aware of it. Connect via Bastion by clicking Connect > Connect via Bastion in the top left of that page. Then sign in with your username and SSH key saved on  a local file again and click Connect to open Bastion.
 From here, type:
 sudo nextcloud.occ config:system:set trusted_domains 1 --value=milannextcloud.eastus.cloudapp.azure.com
 and press Enter.
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/40.png">
 
 Once that task is complete, type: exit
 Press Enter, and click Close to close out that tab when the close prompt opens.
@@ -266,9 +279,13 @@ Now, navigate that previous tab where the untrusted domain page was (or open a b
 https://milannextcloud.eastus.cloudapp.azure.com
 Once you navigate to this site, you will get the same warnings as before because of the self-signed certificate. Continue forward to see your new site page.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/41.png">
+
 You can log in with the credentials you created (the sample admin creds). That will bring you to your admin page, where you can interact with the site as desired.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/42.png">
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/43.png">
 
 With that, the project is complete. Feel free to play around with the site for a bit if you’d like. Otherwise, if you are done with using Bastion and your VM, be sure to shut down your virtual machine and delete your Bastion instance from your resource group so that you aren’t charged for it.
 
