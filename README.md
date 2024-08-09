@@ -106,26 +106,29 @@ If you click the Go to resource button, you can view and edit the details of you
 
 From here, we want to assign the network security group to our subnet. Click the resource group to navigate back to it, where you will find all of the assets you’ve created so far (subnet and network security group) listed under the resource group.
 
-
-
 Click Subnets in the far left column to navigate to our subnet. 
 
 Then, click your new subnet to pull up the settings to adjust. From here, only the Network Security Group needs to be changed from None to the one that was just created. Once it’s selected, click Save to save your changes.
 
-Again, you can click on the Diagram under the mentoring tab in the far left panel to see your updated topology.
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/11.png">
 
 So far we’ve created a network security group to protect the internal subnet of the virtual machine that we’re going to set up within our virtual network. Our next step is to create a Bastion instance to connect to the virtual machine that we’re going to create. It can take a while for Bastion to deploy, which is why we’re doing this before creating the virtual machine so that we make better use of our time. 
 
 Bastion will need its own subnetwork. So, we need to create that before creating the Bastion resource. To do so, click Subnets in the left panel and then click the button to add a subnet.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/12.png">
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/13.png">
 
 Nothing else needs to be changed. Click Add (or Save depending on the options that are presented). You should see it listed under your other subnet now.
 
 Next we need to create our Bastion resource. To do so, click back into your resource group, then click the button to create a resource and type “bastion” in the search box to see the bastion option to select. Click it, and then click Create > Bastion. From there, I have marked the fields to edit. Aside from the name field being updated, the most important field is the virtual network option. Be sure to choose your virtual network and not the resource group, which is also listed as an option. Then, click Review + create, and click Create again.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/14.png">
 
 Our next step will be to create the virtual machine. For this, we will once again click the Add button to pull up the search box, and type “ubuntu” to pull up a list of options. We want the Ubuntu Server. I chose the 22.04 LTS ARM64 Gen2 option.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/15.png">
 
 Take note of all changes on this page. 
 Size: You will likely want to choose a different size if you are assigned a larger (and more costly) than necessary size by default. Since this VM won’t require much processing, we can go for the lowest available option in this tier. 
@@ -138,36 +141,52 @@ Key pair name: Used the same naming conventions as before when naming this VM.
 
 Public inbound ports: None. We don’t want this SSH port to be available over the internet since we are connecting to our VM inside our virtual network using Bastion.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/16.png">
 
 Once everything is adjusted, click Next: Disks > to adjust the disk size. You don’t have to do anything here except allow the default disk size to auto-populate. Then, click Next: Networking to move to the next page.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/17.png">
+
 Here we also don’t have much to do. The settings should be correct, but double-check the marked areas. Public IP should be set to None since we want to set one up manually later. NIC network security group should also be set to None since we already created one and don’t need a new one applied. As long as those settings look right, click Review + create.
 
-You can review your settings and make sure they look something like this.
-
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/18.png">
 
 If everything looks correct, click Create and the deployment will be created and provide a pop-up prompting you to Generate a new key pair with the option to download the private key and create the desired resource. Click that option as you will need that key pair later in order to access the virtual machine.
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/19.png">
 
 Once the resource is created, you will see confirmation and the option to access it.
 
 Now that the virtual machine is created, the next step is to connect to it using Bastion via SSH and install a simple Nextcloud server on our virtual machine. Here’s what you should see if you click Monitoring > Diagram again for the topology.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/20.png">
+
 You can reference the image below to make sure that everything looks right. The main areas marked are worth paying attention to (Private IP address and OS). One thing to note is that the Start button (next to Conect) is grayed out meaning that the VM is on. Be sure to turn it off by clicking the Stop button when you’re finished, otherwise, it will keep running and you will be billed for the extra time used. If everything looks good, click the Connect button (circled at the top left) and choose Connect via Bastion to connect to Bastion through the VM.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/21.png">
 
 In the Username field, enter whichever username you chose when setting this VM up. Then, in Authentication Type, choose SSH Private Key from Local File because that was the option we chose to work with instead of setting it up through a VM password. You should have downloaded the Private key pair to a local file, so you need to click that blue square with the file icon next to the Local File field to find it and allow it to authenticate you.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/22.png">
 
 If you try clicking Connect it should connect unless you have pop-ups blocked. If so, you will see this error.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/23.png">
+
 To fix this, click on the pop-up blocked icon in the URL bar at the top of the page and change it to Always Allow.
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/24.png">
 
 Now when you click Connect, it will open up a new window for the Ubuntu server. Here you need to install Nextcloud with root level permissions. So, you will type:
 sudo snap install nextcloud
 And press Enter.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/25.png">
+
 Once it’s installed, we need to create an admin account with a sample username and password. The purpose of this is to show how it works, so the username and password chosen here are very weak. In use for real accounts, it is highly recommended to create a much more secure username and password! To add the sample user and password, type:
 sudo nextcloud.manual-install (desired username, followed by a single space, then desired password).
+
+ <img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/26.png">
  
 Depending on your computer specs, this could take a few minutes or seconds. Once this is complete, we need to create a self-sign certificate. A self-sign certificate isn’t vital, but it’s the most simple to use for the context of this project (unless you are trying to learn Nextcloud).
 
@@ -185,14 +204,19 @@ Publish an IP
 
 The next step is to access our Nextcloud instance on the web. In order to see our Nextcloud working we need to create a public IP and only allow https connections to it. To do this, we can click on the Network settings option under the Networking tab and then click onto our Network Interface.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/27.png">
 
 From there, we should navigate to IP configuration, where we will see our current setup for a private IP address, but no public IP (which we now will create).
 
-
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/28.png">
 
 Now, click on your IP config (mine is named ipconfig1) and it will pull up the option to edit it. From here, we need to check the Associate public IP address box, click the Create a public IP address option, name our new public IP, and make sure it’s set to standard before clicking OK and then Save.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/29.png">
+
 Once Azure has created our new public IP address and associated it with our Network Interface Controller (NIC), you can check the update by clicking into your VM and then clicking Overview in the left panel. You should see a public IP address has been added right above the private IP.
+
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/30.png">
 
 Generally, it would be possible to copy the public IP and navigate to it by typing:
 https://172.191.142.65 (the IP address would be whatever your public IP is on that page). However, it won’t work at this point because we didn’t add a rule to allow inbound https traffic in our network security group. To resolve this, we will need to allow inbound traffic to our Nextcloud server, but only if it’s coming from our current IP.
