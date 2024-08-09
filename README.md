@@ -225,6 +225,7 @@ One way to find the current public IP is by navigating to www.whatsmyip.com , bu
 
 Next you want to copy your IPv4 address and add it as an inbound rule in your network settings. From here, click Networking > Network settings (in the left panel of your Azure portal) and then click Create port rule > Inbound port rule.
 
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/31.png">
 
 The fields that are marked should be filled out as exemplified in the image below. The main fields to note are the Source IP addresses being your copied public IPv4 address, the Destination IP being the private IP for your VM, the service being HTTPS, and preferably (optional) changing the name to be something you can easily identify. Once you have everything entered, click Add. In a few seconds, that Allow rule will be added to your list of inbound port rules.
 
