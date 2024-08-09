@@ -251,26 +251,24 @@ We’ll need to click into our public IP and edit the configuration first. If yo
 
 After clicking into your VMIP, click into Settings > Configuration. You will now be able to edit your configuration. 
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/36.png">
-
 This is where we will create a DNS label. To do this, you only need to name the label (needs to be a unique name) and click the Save button at the top.
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/37.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/36.png">
 
 Once that is done, click Overview in the left panel. Then, click into your resource group again and then click into your virtual machine.
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/38.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/37.png">
 
 Looking at the details on the far right or under networking, we can see that we now have the public IP address and the DNS name associated with this virtual machine.
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/39.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/38.png">
 
 Our next step is to open our virtual machine to make sure Nextcloud is aware of it. Connect via Bastion by clicking Connect > Connect via Bastion in the top left of that page. Then sign in with your username and SSH key saved on  a local file again and click Connect to open Bastion.
 From here, type:
 sudo nextcloud.occ config:system:set trusted_domains 1 --value=milannextcloud.eastus.cloudapp.azure.com
 and press Enter.
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/40.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/39.png">
 
 Once that task is complete, type: exit
 Press Enter, and click Close to close out that tab when the close prompt opens.
@@ -279,13 +277,13 @@ Now, navigate that previous tab where the untrusted domain page was (or open a b
 https://milannextcloud.eastus.cloudapp.azure.com
 Once you navigate to this site, you will get the same warnings as before because of the self-signed certificate. Continue forward to see your new site page.
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/41.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/40.png">
 
 You can log in with the credentials you created (the sample admin creds). That will bring you to your admin page, where you can interact with the site as desired.
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/42.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/41.png">
 
-<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/43.png">
+<img src= "https://github.com/milanepps1/Azure-Web-Server-VM/blob/main/42.png">
 
 With that, the project is complete. Feel free to play around with the site for a bit if you’d like. Otherwise, if you are done with using Bastion and your VM, be sure to shut down your virtual machine and delete your Bastion instance from your resource group so that you aren’t charged for it.
 
